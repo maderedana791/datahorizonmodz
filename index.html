@@ -3,30 +3,36 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-  <title>Cyber Runner - Prototype</title>
+  <title>Cyber Runner - Enhanced Prototype</title>
   <link rel="stylesheet" href="style.css">
   <!--
     Cara menjalankan:
-    - Simpan file ini sebagai index.html, dan letakkan bersama game.js + style.css
-    - Buka index.html di browser (mobile atau desktop)
+    - Simpan ketiga file: index.html, style.css, game.js (di folder yang sama)
+    - Buka index.html di browser (mobile/desktop)
     - Ubah VIEW_MODE dan DEBUG di game.js jika perlu
   -->
 </head>
 <body>
-  <!-- Canvas mengisi layar -->
-  <canvas id="gameCanvas"></canvas>
+  <canvas id="gameCanvas" aria-hidden="true"></canvas>
 
-  <!-- Invisible / transparent touch zones (diposisikan dan diatur via CSS) -->
+  <!-- Transparent touch zones (accept input but invisible) -->
   <div id="touch-left" class="touch-zone" aria-hidden="true"></div>
   <div id="touch-right" class="touch-zone" aria-hidden="true"></div>
   <div id="touch-bottom" class="touch-zone" aria-hidden="true"></div>
 
-  <!-- Minimal onscreen buttons (visible only di VIEW_MODE = "full") -->
-  <div id="ui-overlay">
-    <div id="score">0</div>
-    <div id="coins">0</div>
-    <button id="btn-restart">Restart</button>
-    <button id="btn-pause">Pause</button>
+  <!-- UI overlay (neon panel) -->
+  <div id="ui-overlay" aria-hidden="false">
+    <div id="ui-left">
+      <div id="score" class="ui-pill">Score: 0</div>
+      <div id="coins" class="ui-pill">Best: 0</div>
+    </div>
+    <div id="ui-center">
+      <button id="btn-restart" class="ui-btn">Restart</button>
+      <button id="btn-pause" class="ui-btn">Pause</button>
+    </div>
+    <div id="ui-right">
+      <div id="status" class="ui-pill">RUN</div>
+    </div>
   </div>
 
   <script src="game.js"></script>
