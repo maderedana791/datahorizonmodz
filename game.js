@@ -22,7 +22,7 @@ const config = {
   gravity: 2000,
   jumpImpulse: 780,
   slideDuration: 420,
-  spawnBase: 900, // ms
+  spawnBase: 1200, // ms
   groundHeight: 24,
   coinChance: 0.25,
   particleLimit: 200
