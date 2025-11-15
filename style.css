@@ -1,98 +1,125 @@
-/* style.css - minimal responsive styles for Cyber Runner prototype */
+/* style.css - enhanced visual styling for Cyber Runner prototype */
 
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 html,body {
   height: 100%;
   margin: 0;
-  background: #000; /* background for blank or full mode */
-  overflow: hidden; /* prevent page scroll / overscroll */
+  background: #000;
+  overflow: hidden;
   -webkit-user-select: none;
   user-select: none;
   touch-action: manipulation;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 #gameCanvas {
   display: block;
   width: 100vw;
   height: 100vh;
-  background: #000; /* will be overridden in VIEW_MODE full by script drawing */
+  background: #000;
 }
 
-/* Transparent touch zones (cover different areas) */
+/* Transparent touch zones (invisible but receive events) */
 .touch-zone {
   position: fixed;
-  z-index: 5;
+  z-index: 6;
   background: transparent;
-  opacity: 0; /* remain invisible but receive events */
+  opacity: 0;
   touch-action: none;
 }
 
-/* left half for jump (tap) */
-#touch-left {
-  left: 0;
-  top: 0;
-  width: 60%;
-  height: 100%;
-}
-
-/* right small corner for power-up (double-tap) */
-#touch-right {
-  right: 0;
-  bottom: 0;
-  width: 40%;
-  height: 50%;
-}
-
+/* left half (tap to jump) */
+#touch-left { left: 0; top: 0; width: 65%; height: 100%; }
+/* right area (double-tap / power) */
+#touch-right { right: 0; bottom: 0; width: 35%; height: 50%; }
 /* bottom area for swipe down (slide) */
-#touch-bottom {
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 30%;
-}
+#touch-bottom { left: 0; bottom: 0; width: 100%; height: 28%; }
 
-/* UI overlay shown in VIEW_MODE = full */
+/* UI Overlay (neon panel) */
 #ui-overlay {
   position: fixed;
   z-index: 10;
-  top: 8px;
-  left: 8px;
-  right: 8px;
+  left: 12px;
+  right: 12px;
+  top: 12px;
   display: flex;
-  gap: 8px;
+  justify-content: space-between;
   align-items: center;
-  pointer-events: none; /* allow clicks pass through unless specific buttons */
-  color: #0ff;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  font-size: 14px;
+  pointer-events: none; /* allow touches pass-through except buttons */
+  gap: 8px;
 }
 
-/* Score and coins (pointer-events none so touch zones still work) */
-#score, #coins {
-  background: rgba(0,0,0,0.35);
-  padding: 6px 10px;
-  border-radius: 8px;
+#ui-left, #ui-center, #ui-right { display:flex; gap:8px; align-items:center; }
+
+/* Pill style for score */
+.ui-pill {
   pointer-events: none;
-  color: #0ff;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(0,255,213,0.06), rgba(0,0,0,0.18));
+  border: 1px solid rgba(0,255,213,0.12);
+  color: #00ffd5;
+  font-weight: 600;
+  font-size: 13px;
+  text-shadow: 0 1px 8px rgba(0,255,213,0.06);
+  backdrop-filter: blur(4px);
 }
 
-/* Buttons (enable pointer-events) */
-#btn-restart, #btn-pause {
-  margin-left: auto;
+/* Buttons - enable pointer-events */
+.ui-btn {
   pointer-events: auto;
-  background: rgba(255,255,255,0.06);
-  color: #fff;
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
   border: 1px solid rgba(255,255,255,0.08);
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.5), 0 0 12px rgba(0,255,213,0.03) inset;
+}
+
+/* Status pill */
+#status {
   padding: 6px 10px;
   border-radius: 8px;
-  cursor: pointer;
-  font-size: 13px;
+  background: rgba(255,255,255,0.02);
+  color: #ffdd57;
+  font-weight: 700;
+  font-size: 12px;
+  pointer-events: none;
 }
 
-/* Hide UI in blank mode by script (we keep CSS simple) */
+/* make UI compact on small screens */
+@media (max-width: 420px) {
+  .ui-pill { padding: 6px 8px; font-size: 12px; }
+  .ui-btn { padding: 6px 8px; font-size: 12px; }
+}
 
-/* Small responsive tweaks */
-@media (orientation: landscape) {
-  #score, #coins { font-size: 13px; }
-  #btn-restart, #btn-pause { font-size: 12px; padding: 5px 8px; }
+/* optional subtle hint area (hidden by default) */
+.hint {
+  position: fixed;
+  bottom: 12px;
+  left: 12px;
+  z-index: 11;
+  color: rgba(255,255,255,0.6);
+  font-size: 12px;
+  pointer-events: none;
+}
+
+/* developer debug overlay (enabled via DEBUG) */
+#debugOverlay {
+  position: fixed;
+  z-index: 9999;
+  left: 8px;
+  bottom: 8px;
+  background: rgba(0,0,0,0.6);
+  color: #0ff;
+  padding: 8px;
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 12px;
+  pointer-events: none;
 }
